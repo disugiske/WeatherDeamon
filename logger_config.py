@@ -4,7 +4,6 @@ import sys
 logger = logging.getLogger('Weather')
 logging.basicConfig(
         filename="weather.log",
-        encoding="UTF-8",
         filemode="w",
         format="[%(asctime)s] %(levelname).1s %(message)s",
         datefmt="%d-%b-%y %H:%M:%S",

@@ -1,6 +1,6 @@
 import os
 import httpx
-from main import logger
+from logger_config import logger
 from dotenv import load_dotenv
 
 load_dotenv()

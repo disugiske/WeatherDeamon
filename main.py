@@ -1,8 +1,7 @@
-import logging
-import sys
 from fastapi import FastAPI, Request
 from starlette.responses import JSONResponse
-from utils import ip_to_loc, openweather
+from logger_config import logger
+from utils import ip_to_loc, openweather, makeresponse
 
 app = FastAPI()
 
@@ -11,4 +10,8 @@ app = FastAPI()
 async def weather(request: Request):
     ip = request.client.host
     lat, lon = await ip_to_loc(ip)
-    return JSONResponse(await openweather(lat, lon))
+    weather_response = await openweather(lat, lon)
+    json_resp = await makeresponse(weather_response)
+    logger.info(f"Send response for ip {ip}")
+    logger.exception("Error in main func")
+    return JSONResponse(json_resp)

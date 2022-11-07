@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 async def ip_to_loc(ip):
-    response = httpx.get(f"https://ipinfo.io/{ip}?token={os.environ.get('IPINFO_TOKEN')}").json()
+    response = httpx.get(f"https://ipinfo.io/{ip}?token={os.environ.get('IPINFO_TOKEN')}")
     response.encoding = "UTF-8"
     logger.info("ip response: ",response)
-    loc = response.get('loc')
+    loc = response.json().get('loc')
     lat, lon = loc.split(',')
     logger.exception("Error in ip_to_loc func")
     return lat, lon

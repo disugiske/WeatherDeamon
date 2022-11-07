@@ -7,7 +7,6 @@ load_dotenv()
 
 async def ip_to_loc(ip):
     response = httpx.get(f"https://ipinfo.io/{ip}?token={os.environ.get('IPINFO_TOKEN')}", trust_env=True)
-    response.encoding = 'utf-8'
     logger.info("ip response: ",response.text)
     loc = response.json().get('loc')
     lat, lon = loc.split(',')
@@ -19,7 +18,6 @@ async def openweather(lat, lon):
                                  f"&lang=ru&appid={os.environ.get('API_WEATHER_KEY')}",
                                  trust_env=True
                                  )
-    weather_response.encoding = "utf-8"
     logger.info('weather_response: ', weather_response.text)
     logger.exception("Error in openweather func")
     return weather_response.json()

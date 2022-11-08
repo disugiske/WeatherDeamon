@@ -25,7 +25,8 @@ async def openweather(lat, lon):
 async def makeresponse(weather_response):
     responseJSON = {"city": weather_response['name'],
                     "temp": weather_response['main']['temp'],
-                    "conditions": weather_response['weather'][0]['description']
+                    "conditions": weather_response['weather'][0]['description'],
+                    "wind": weather_response['wind']
                     }
     logger.info(f"responseJSON: {responseJSON}")
     return responseJSON

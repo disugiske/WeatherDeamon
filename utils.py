@@ -1,6 +1,6 @@
 import os
-from cache import AsyncLRU
 import httpx
+from cache.async_lru import AsyncLRU
 from logger_config import logger
 from dotenv import load_dotenv
 

@@ -1,6 +1,5 @@
 import os
-from functools import lru_cache
-
+from cache import AsyncLRU
 import httpx
 from logger_config import logger
 from dotenv import load_dotenv
@@ -8,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-@lru_cache
+@AsyncLRU(maxsize=128)
 async def ip_to_loc(ip):
     response = httpx.get(f"https://ipinfo.io/{ip}?token={os.environ.get('IPINFO_TOKEN')}")
     if response.status_code != 200:

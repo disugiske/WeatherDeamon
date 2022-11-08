@@ -8,7 +8,8 @@ load_dotenv()
 
 async def ip_to_loc(ip):
     response = httpx.get(f"https://ipinfo.io/{ip}?token={os.environ.get('IPINFO_TOKEN')}")
-    logger.info(f"ip response: {response}")
+    if response.status_code != 200:
+        logger.error(f"ip response: {response.text}")
     loc = response.json().get('loc')
     lat, lon = loc.split(',')
     return lat, lon
@@ -18,7 +19,8 @@ async def openweather(lat, lon):
     weather_response = httpx.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric"
                                  f"&appid={os.environ.get('API_WEATHER_KEY')}",
                                  )
-    logger.info(f"weather_response: {weather_response}")
+    if weather_response.status_code != 200:
+        logger.error(f"weather_response: {weather_response.text}")
     return weather_response.json()
 
 
@@ -28,5 +30,4 @@ async def makeresponse(weather_response):
                     "conditions": weather_response['weather'][0]['description'],
                     "wind": weather_response['wind']
                     }
-    logger.info(f"responseJSON: {responseJSON}")
     return responseJSON

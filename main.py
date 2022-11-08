@@ -10,6 +10,7 @@ app = FastAPI()
 async def weather(request: Request):
     try:
         ip = request.client.host
+        logger.info(f"Request from ip: {ip}")
         lat, lon = await ip_to_loc(ip)
         weather_response = await openweather(lat, lon)
         json_resp = await makeresponse(weather_response)

@@ -12,7 +12,7 @@ Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
 BuildRequires: systemd
-Requires: python-devel nginx gcc
+Requires: python3.9 nginx gcc
 Summary:  uvicorn daemon
 
 
@@ -31,9 +31,8 @@ Git version: %{git_version} (branch: %{git_branch})
 %setup -n otus-%{current_datetime}
 
 %build
-cd WeatherDeamon
-python3 -m venv WeatherDeamon
-source WeatherDeamon/bin/activate
+python3 -m venv venv
+. venv/bin/activate
 pip3 install -r requirements.txt
 deactivate
 cp /conf/w-nginx /etc/nginx/sites-available/w-nginx

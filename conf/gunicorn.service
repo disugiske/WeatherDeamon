@@ -1,0 +1,20 @@
+[Unit]
+Description=weather daemon
+
+[Service]
+User=root
+Group=www-data
+StandardOutput=/var/log/weather.log
+StandardError=/var/log/weather_error.log
+WorkingDirectory=/usr/local/WeatherDeamon
+ExecStart=/usr/local/WeatherDeamon/venv/bin/gunicorn \
+          --access-logfile - \
+          -k uvicorn.workers.UvicornWorker \
+          --workers 3 \
+          --bind 0.0.0.0:3000 \
+          main:app
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

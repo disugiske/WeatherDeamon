@@ -2,7 +2,7 @@ server {
     listen 2000;
     server_name 89.223.69.51;
 
-    location / {
+    location /ip2w {
         include proxy_params;
         proxy_pass http://0.0.0.0:3000;
     }

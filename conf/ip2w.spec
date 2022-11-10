@@ -1,3 +1,5 @@
+
+
 License:        BSD
 Vendor:         Otus
 Group:          PD01
@@ -23,7 +25,7 @@ Git version: %{git_version} (branch: %{git_branch})
 %define __etcdir    /usr/local/etc
 %define __logdir    /val/log/
 %define __bindir    /usr/local/ip2w/
-%define __systemddir	/usr/lib/systemd/system/
+%define __systemddir	/etc/systemd/system/
 %define __nginxdir	/etc/nginx/
 %define __sysconfigdir	/usr/local/
 
@@ -35,20 +37,23 @@ python3 -m venv venv
 . venv/bin/activate
 pip3 install -r requirements.txt
 deactivate
-cp /conf/w-nginx /etc/nginx/sites-available/w-nginx
-
+cp conf/w-nginx /etc/nginx/sites-available/
+cp conf/gunicorn.service %{__systemddir}
+ln -s %{__nginxdir}sites-available/w-nginx/ %{__nginxdir}sites-enabled
 %install
 [ "%{buildroot}" != "/" ] && rm -fr %{buildroot}
 %{__mkdir} -p %{buildroot}/%{__systemddir}
 %{__mkdir} -p %{buildroot}/%{__sysconfigdir}
 %{__mkdir} -p %{buildroot}/%{__logdir}
 %{__mkdir} -p %{buildroot}/%{__bindir}
-%{__install} -pD -m 644 /conf/gunicorn.service %{buildroot}/%{__systemddir}/%{name}.service
-%{__install} -pD -m 644 conf/w-nginx %{buildroot}/%{__nginxdir}/sites-available/
+%{__install} -pD -m 644 conf/gunicorn.service %{buildroot}%{__systemddir}%{name}.service
+%{__install} -pD -m 644 conf/w-nginx %{buildroot}%{__nginxdir}sites-available
 
 %post
 %systemd_post %{name}.service
+systemctl enable unicorn.service
 systemctl daemon-reload
+systemctl start unicorn.service
 systemctl restart nginx
 
 %preun

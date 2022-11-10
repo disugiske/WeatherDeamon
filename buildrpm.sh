@@ -48,7 +48,7 @@ git archive --format=tar --prefix=otus-${CURRENT_DATETIME}/ ${BRANCH} | gzip > $
 
 echo '############################################################'
 
-rpmbuild -ba --clean $SPECFILE \
+rpmbuild --nodeps -ba --clean $SPECFILE \
   --define "current_datetime ${CURRENT_DATETIME}" \
   --define "git_version ${GIT_VERSION}" \
   --define "git_branch ${BRANCH}"

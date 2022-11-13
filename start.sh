@@ -4,10 +4,10 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 deactivate
-cp conf/w-nginx /etc/nginx/sites-available/
-cp conf/gunicorn.service /etc/systemd/system/
-sudo ln -s /etc/nginx/sites-available/w-nginx /etc/nginx/sites-enabled
+cp -f conf/w-nginx /etc/nginx/sites-available/
+cp -f conf/gunicorn.service /etc/systemd/system/
+sudo ln -sf /etc/nginx/sites-available/w-nginx /etc/nginx/sites-enabled
 systemctl enable gunicorn.service
 systemctl daemon-reload
-systemctl start unicorn.service
+systemctl start gunicorn.service
 systemctl restart nginx

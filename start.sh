@@ -7,7 +7,7 @@ deactivate
 cp conf/w-nginx /etc/nginx/sites-available/
 cp conf/gunicorn.service /etc/systemd/system/
 sudo ln -s /etc/nginx/sites-available/w-nginx /etc/nginx/sites-enabled
-systemctl enable unicorn.service
+systemctl enable gunicorn.service
 systemctl daemon-reload
 systemctl start unicorn.service
 systemctl restart nginx

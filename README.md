@@ -21,6 +21,9 @@ cd WeatherDeamon
 chmod -R 777 .
 ./start.sh
 ```
+Создайте .env файл со своими ключами для openweathermap(API_WEATHER_KEY) и ipinfo.io(IPINFO_TOKEN)
+
+
 Демон автоматически установит всё нужное и будет работать на 2000 порте. (Для этого нужно изменить /etc/nginx/sites-enabled/default на 2000 порт)
 
 Для работы на localhost измените в файле w-nginx порт с 2000 на 80

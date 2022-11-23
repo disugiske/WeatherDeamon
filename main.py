@@ -17,4 +17,5 @@ async def weather(request: Request):
         logger.info(f"Send response for ip {ip}, city {json_resp['city']}")
         return JSONResponse(json_resp)
     except Exception as e:
+        return JSONResponse({"data": "error"})
         logger.exception("Error in main func", e)
